@@ -48,7 +48,7 @@
     <style>
         body { font-family: 'Arial', sans-serif; }
         .text-justify { text-align: justify; }
-        #blog-section { padding: 1rem; max-height: 500px; overflow-y: auto; }
+        #blog-section { padding: 1rem; }
         .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
     </style>
 </head>
@@ -56,20 +56,21 @@
     <!-- Header -->
     <header class="bg-blue-900 text-white sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <div class="text-2xl font-bold">Heating and Cooling</div>
-            <nav class="space-x-6 hidden md:flex items-center">
-                <a href="#home" class="hover:text-blue-300">Home</a>
+            <div class="text-2xl font-bold mr-4">Heating and Cooling&nbsp;&nbsp;</div>
+            <nav class="flex items-center space-x-6">
+                <a href="#home" class="hover:text-blue-300 mr-4">Home&nbsp;&nbsp;</a>
                 <a href="#services" class="hover:text-blue-300">Services</a>
                 <a href="#about" class="hover:text-blue-300">About</a>
                 <a href="#contact" class="hover:text-blue-300">Contact</a>
             </nav>
+            <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12 mx-auto">
             <button class="md:hidden" onclick="toggleMenu()">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden bg-blue-800 text-white flex flex-col items-center space-y-4 py-4">
-            <a href="#home" class="hover:text-blue-300">Home</a>
+            <a href="#home" class="hover:text-blue-300">Home&nbsp;&nbsp;</a>
             <a href="#services" class="hover:text-blue-300">Services</a>
             <a href="#about" class="hover:text-blue-300">About</a>
             <a href="#contact" class="hover:text-blue-300">Contact</a>
@@ -77,12 +78,15 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-cover bg-center h-screen flex items-center text-white" style="background-image: url('https://plus.unsplash.com/premium_photo-1682088021638-01fdf53d147e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+    <section id="home" class="bg-cover bg-center h-screen flex items-center text-white" style="background-image: url('https://images.pexels.com/photos/7061339/pexels-photo-7061339.jpeg')">
         <div class="container mx-auto text-center px-6">
-            <img src="https://plus.unsplash.com/premium_photo-1682126012378-859ca7a9f4cf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Expert Heating and Cooling Solutions" class="mx-auto mb-4 rounded w-1/3">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-justify">Expert Heating and Cooling Solutions</h1>
-            <p class="text-lg md:text-xl mb-6 text-justify">Providing top-tier HVAC services for residential and commercial properties in Melbourne.</p>
-            <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Get a Quote</a>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-justify text-black">
+  Expert Heating and Cooling Solutions
+</h1>
+<p class="text-lg md:text-xl mb-6 text-justify text-black">
+  Providing top-tier HVAC services for residential and commercial properties in Melbourne.
+</p>
+            <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded"><strong>Get a Quote</strong></a>
         </div>
     </section>
 
@@ -93,19 +97,19 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Residential Heating -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://plus.unsplash.com/premium_photo-1683134512538-7b390d0adc9e?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Residential Heating AC" class="w-full h-48 object-cover rounded mb-4">
+                    <img src="https://images.pexels.com/photos/20046692/pexels-photo-20046692.jpeg" alt="Residential Heating AC" class="w-full h-48 object-cover rounded mb-4">
                     <h3 class="text-xl font-semibold mb-2 text-justify">Residential Heating</h3>
                     <p class="text-gray-600 text-justify">Stay warm with our efficient heating systems designed for homes. We offer installation, maintenance, and repair services.</p>
                 </div>
                 <!-- Commercial Cooling -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://plus.unsplash.com/premium_photo-1682126009570-3fe2399162f7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Cooling AC" class="w-full h-48 object-cover rounded mb-4">
+                    <img src="https://cdn.pixabay.com/photo/2024/06/21/08/05/air-conditioner-8843842_1280.png" alt="Commercial Cooling AC" class="w-full h-48 object-cover rounded mb-4">
                     <h3 class="text-xl font-semibold mb-2 text-justify">Commercial Cooling</h3>
                     <p class="text-gray-600 text-justify">Advanced air conditioning solutions for businesses, ensuring comfort and compliance with Melbourne's regulations.</p>
                 </div>
                 <!-- Maintenance Plans -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://plus.unsplash.com/premium_photo-1682088021638-01fdf53d147e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maintenance Plans AC" class="w-full h-48 object-cover rounded mb-4">
+                    <img src="https://cdn.pixabay.com/photo/2024/06/22/14/47/air-conditioner-8846462_1280.png" alt="Maintenance Plans AC" class="w-full h-48 object-cover rounded mb-4">
                     <h3 class="text-xl font-semibold mb-2 text-justify">Maintenance Plans</h3>
                     <p class="text-gray-600 text-justify">Prevent costly breakdowns with our proactive maintenance programs tailored for your HVAC systems.</p>
                 </div>
@@ -132,9 +136,10 @@
     <section id="blog-post-1" class="py-16">
         <div class="container mx-auto px-6">
             <h1 class="text-3xl font-bold mb-6 text-justify">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
-            <p class="text-gray-500 text-sm mb-4 text-justify">Posted on August 01, 2025 | Category: Home Improvement | Tags: commercial air conditioning melbourne</p>
+            
            <div class="blog-content text-gray-600">
-                <img src="https://plus.unsplash.com/premium_photo-1682088024868-09d8cbc8659f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Commercial Air Conditioning Featured Image" class="w-full h-48 object-cover rounded mb-4">
+                <img src="https://cdn.pixabay.com/photo/2019/03/21/09/42/air-4070641_1280.jpg" alt="Commercial Air Conditioning Featured Image" class="w-full h-screen object-cover rounded-none mb-0">
+<br>
                 <p>Commercial air cooling located in Melbourne does not have to be only about comfort. It's an asset that can be strategically used to improve efficiency of operations, employee productivity as well as customer satisfaction. For Melbourne businesses that have to contend with unpredictable conditions, rising costs for energy and stringent compliance requirements Modern HVAC solutions provide 30 to 50 percent cost savings on energy, proactive maintenance technologies to avoid costly breakdowns, as well as intelligent climate control designed specifically for commercial, hospitality industrial, or other spaces. The evolution of air conditioning transforms it from a cost for utility into an advantage in Melbourne's vast commercial environment.</p>
 
                 <h3 class="text-xl font-semibold">Why Melbourne's Climate Makes Smart AC Non-Negotiable</h3>
@@ -286,14 +291,17 @@
     <section id="contact" class="bg-blue-900 text-white py-16">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-12 text-justify">Contact Us</h2>
-            <div class="flex flex-col md:flex-row justify-between">
+            <div class="flex flex-col md:flex-row justify-between items-start">
                 <div class="md:w-1/2 mb-6 md:mb-0">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Get in Touch</h3>
-                    <p class="text-justify"><i class="fas fa-phone-alt mr-2"></i> (03) 1234 5678</p>
-                    <p class="text-justify"><i class="fas fa-envelope mr-2"></i> info@heatingcooling.com.au</p>
-                    <p class="text-justify"><i class="fas fa-map-marker-alt mr-2"></i> 123 Cool St, Melbourne, VIC 3000</p>
+                    <h3 class="text-xl font-semibold mb-4 text-justify">Visit Our Showroom</h3>
+                    <p class="text-justify mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
+                    <p class="text-justify mb-2"><strong>Trading Hours:</strong></p>
+                    <p class="text-justify">Monday - Friday 9:00 am - 5:00 pm</p>
+                    <h3 class="text-xl font-semibold mt-6 mb-4 text-justify">Contact Information</h3>
+                    <p class="text-justify mb-2">PO Box 1240, Croydon, Vic 3136</p>
+                    <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
                 </div>
-                <div class="md:w-1/2">
+                <div class="md:w-1/2 md:ml-8">
                     <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
                     <div>
                         <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
@@ -309,6 +317,9 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-6">
+            <div class="flex justify-center mb-8">
+                <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12">
+            </div>
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">About Us</h4>
@@ -317,17 +328,17 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">Services</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Residential Heating</a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Commercial Cooling</a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Maintenance Plans</a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Residential Heating</strong></a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Commercial Cooling</strong></a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Maintenance Plans</strong></a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">Quick Links</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#home" class="hover:text-blue-300">Home</a></li>
-                        <li class="text-justify"><a href="#about" class="hover:text-blue-300">About</a></li>
-                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300">Contact</a></li>
+                        <li class="text-justify"><a href="#home" class="hover:text-blue-300"><strong>Home</strong></a></li>
+                        <li class="text-justify"><a href="#about" class="hover:text-blue-300"><strong>About</strong></a></li>
+                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300"><strong>Contact</strong></a></li>
                     </ul>
                 </div>
                 <div>
