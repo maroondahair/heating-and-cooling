@@ -321,14 +321,20 @@
                     <p class="text-justify mb-2">PO Box 1240, Croydon, Vic 3136</p>
                     <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
                 </div>
-                <div class="md:w-1/2 md:ml-8">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
-                    <div>
-                        <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
-                        <input type="email" placeholder="Email" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
-                        <textarea placeholder="Message" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
-                        <button onclick="alert('Message sent!')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
-                    </div>
+                <form action="https://formsubmit.co/Sales@maroondahair.com.au" method="POST" class="md:w-1/2 md:ml-8">
+    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+    <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+    <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+    <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
+    
+    <!-- Optional hidden fields -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+</form>
+
                 </div>
             </div>
         </div>
