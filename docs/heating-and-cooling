@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heating and Cooling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Arial', sans-serif; }
+        .text-justify { text-align: justify; }
+        .dropdown:hover .dropdown-menu { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="text-2xl font-bold">Heating and Cooling</div>
+            <nav class="space-x-6 hidden md:flex items-center">
+                <a href="#home" class="hover:text-blue-300">Home</a>
+                <a href="#services" class="hover:text-blue-300">Services</a>
+                <a href="#about" class="hover:text-blue-300">About</a>
+                <div class="relative dropdown">
+                    <a href="blog.html" class="hover:text-blue-300 flex items-center">Blog <i class="fas fa-chevron-down ml-1"></i></a>
+                    <div class="dropdown-menu hidden absolute bg-blue-800 text-white mt-2 rounded shadow-lg">
+                        <a href="blog.html" class="block px-4 py-2 hover:bg-blue-700">Blog Home</a>
+                        <a href="blog.html#blog-post-1" class="block px-4 py-2 hover:bg-blue-700">Commercial Air Conditioning Melbourne</a>
+                    </div>
+                </div>
+                <a href="#contact" class="hover:text-blue-300">Contact</a>
+            </nav>
+            <button class="md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden bg-blue-800 text-white flex flex-col items-center space-y-4 py-4">
+            <a href="#home" class="hover:text-blue-300">Home</a>
+            <a href="#services" class="hover:text-blue-300">Services</a>
+            <a href="#about" class="hover:text-blue-300">About</a>
+            <a href="blog.html" class="hover:text-blue-300">Blog</a>
+            <a href="blog.html#blog-post-1" class="hover:text-blue-300">Commercial Air Conditioning Melbourne</a>
+            <a href="#contact" class="hover:text-blue-300">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-cover bg-center h-screen flex items-center text-white" style="background-image: url('https://images.unsplash.com/photo-1616579630931-0ffde0f7b309?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')">
+        <div class="container mx-auto text-center px-6">
+            <img src="https://images.unsplash.com/photo-1615873967317-03b7d69d1b18?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Expert Heating and Cooling Solutions" class="mx-auto mb-4 rounded">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-justify">Expert Heating and Cooling Solutions</h1>
+            <p class="text-lg md:text-xl mb-6 text-justify">Providing top-tier HVAC services for residential and commercial properties in Melbourne.</p>
+            <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Get a Quote</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Our Services</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Residential Heating -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1582266255760-d3e27f4d1117?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Residential Heating AC" class="w-full h-48 object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold mb-2 text-justify">Residential Heating</h3>
+                    <p class="text-gray-600 text-justify">Stay warm with our efficient heating systems designed for homes. We offer installation, maintenance, and repair services.</p>
+                </div>
+                <!-- Commercial Cooling -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1620121478247-ec786bd85e1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Commercial Cooling AC" class="w-full h-48 object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold mb-2 text-justify">Commercial Cooling</h3>
+                    <p class="text-gray-600 text-justify">Advanced air conditioning solutions for businesses, ensuring comfort and compliance with Melbourne's regulations.</p>
+                </div>
+                <!-- Maintenance Plans -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1615874694520-0f4a796d1642?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Maintenance Plans AC" class="w-full h-48 object-cover rounded mb-4">
+                    <h3 class="text-xl font-semibold mb-2 text-justify">Maintenance Plans</h3>
+                    <p class="text-gray-600 text-justify">Prevent costly breakdowns with our proactive maintenance programs tailored for your HVAC systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-gray-200 py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-justify">About Us</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <img src="https://images.unsplash.com/photo-1615873967317-03b7d69d1b18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Air Conditioning Service" class="w-full md:w-1/2 h-64 object-cover rounded mb-6 md:mb-0 md:mr-6">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1620121478247-ec786bd85e1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="About Us Team" class="w-1/2 h-32 object-cover rounded mb-4 float-left mr-4">
+                    <p class="text-gray-600 mb-4 text-justify">Heating and Cooling is your trusted heating and cooling provider in Melbourne. With over 20 years of experience, we specialize in residential heating, commercial cooling, and comprehensive maintenance services.</p>
+                    <p class="text-gray-600 text-justify">Our ARCtick-certified technicians deliver energy-efficient systems, ensuring compliance and comfort. We partner with top brands like Daikin and Mitsubishi Electric to provide reliable, smart HVAC solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-blue-900 text-white py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Contact Us</h2>
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="md:w-1/2 mb-6 md:mb-0">
+                    <h3 class="text-xl font-semibold mb-4 text-justify">Get in Touch</h3>
+                    <p class="text-justify"><i class="fas fa-phone-alt mr-2"></i> (03) 1234 5678</p>
+                    <p class="text-justify"><i class="fas fa-envelope mr-2"></i> info@heatingcooling.com.au</p>
+                    <p class="text-justify"><i class="fas fa-map-marker-alt mr-2"></i> 123 Cool St, Melbourne, VIC 3000</p>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+                    <div>
+                        <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+                        <input type="email" placeholder="Email" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+                        <textarea placeholder="Message" class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
+                        <button onclick="alert('Message sent!')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-justify">About Us</h4>
+                    <p class="text-gray-400 text-justify">Melbourne's leading HVAC provider, offering reliable heating and cooling solutions for homes and businesses.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-justify">Services</h4>
+                    <ul class="text-gray-400">
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Residential Heating</a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Commercial Cooling</a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300">Maintenance Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-justify">Quick Links</h4>
+                    <ul class="text-gray-400">
+                        <li class="text-justify"><a href="#home" class="hover:text-blue-300">Home</a></li>
+                        <li class="text-justify"><a href="#about" class="hover:text-blue-300">About</a></li>
+                        <li class="text-justify"><a href="blog.html" class="hover:text-blue-300">Blog</a></li>
+                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-justify">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400 text-justify">
+                <p>&copy; 2025 Heating and Cooling. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
