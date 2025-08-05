@@ -42,59 +42,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heating and Cooling - Blog</title>
+    <title>Heating and Cooling</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body { font-family: 'Arial', sans-serif; }
         .text-justify { text-align: justify; }
-        .blog-content a { color: #1e40af; text-decoration: underline; }
-        .blog-content a:hover { color: #2563eb; }
-        .blog-content p, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
-        .blog-content h3 { margin-top: 2rem; margin-bottom: 1rem; }
-        .blog-content h4 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        #blog-section { padding: 1rem; }
+        .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
     </style>
 </head>
 <body class="bg-gray-100">
     <!-- Header -->
     <header class="bg-blue-900 text-white sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <div class="text-2xl font-bold">Heating and Cooling</div>
-            <nav class="space-x-6 hidden md:flex items-center">
-                <a href="index.html#home" class="hover:text-blue-300">Home</a>
-                <a href="index.html#services" class="hover:text-blue-300">Services</a>
-                <a href="index.html#about" class="hover:text-blue-300">About</a>
-                <div class="relative dropdown">
-                    <a href="blog.html" class="hover:text-blue-300 flex items-center">Blog <i class="fas fa-chevron-down ml-1"></i></a>
-                    <div class="dropdown-menu hidden absolute bg-blue-800 text-white mt-2 rounded shadow-lg">
-                        <a href="blog.html" class="block px-4 py-2 hover:bg-blue-700">Blog Home</a>
-                        <a href="#blog-post-1" class="block px-4 py-2 hover:bg-blue-700">Commercial Air Conditioning Melbourne</a>
-                    </div>
-                </div>
-                <a href="index.html#contact" class="hover:text-blue-300">Contact</a>
-            </nav>
+            <div class="text-2xl font-bold mr-4">Heating and Cooling&nbsp;&nbsp;</div>
+           <nav class="flex items-center space-x-6">
+  <a href="https://maroondahair.github.io/heating-and-cooling/" class="hover:text-blue-300">Home</a>
+  <a href="#services" class="hover:text-blue-300">Services</a>
+  <a href="#about" class="hover:text-blue-300">About</a>
+  <a href="#contact" class="hover:text-blue-300">Contact</a>
+</nav>
+            <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12 mx-auto">
             <button class="md:hidden" onclick="toggleMenu()">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden bg-blue-800 text-white flex flex-col items-center space-y-4 py-4">
-            <a href="index.html#home" class="hover:text-blue-300">Home</a>
-            <a href="index.html#services" class="hover:text-blue-300">Services</a>
-            <a href="index.html#about" class="hover:text-blue-300">About</a>
-            <a href="blog.html" class="hover:text-blue-300">Blog</a>
-            <a href="#blog-post-1" class="hover:text-blue-300">Commercial Air Conditioning Melbourne</a>
-            <a href="index.html#contact" class="hover:text-blue-300">Contact</a>
+            <a href="#home" class="hover:text-blue-300">Home</a>
+            <a href="#services" class="hover:text-blue-300">Services</a>
+            <a href="#about" class="hover:text-blue-300">About</a>
+            <a href="#contact" class="hover:text-blue-300">Contact</a>
         </div>
     </header>
 
     <!-- Blog Post Section -->
     <section id="blog-post-1" class="py-16">
         <div class="container mx-auto px-6">
+<h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Our Blog</h1>
+
             <h1 class="text-3xl font-bold mb-6 text-justify">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
-            <p class="text-gray-500 text-sm mb-4 text-justify">Posted on August 01, 2025 | Category: Home Improvement | Tags: commercial air conditioning melbourne</p>
-            <div class="bg-white p-6 rounded-lg shadow-lg blog-content text-gray-600 text-justify">
-                <img src="https://images.unsplash.com/photo-1615874694520-0f4a796d1642?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600&q=80" alt="Commercial Air Conditioning" class="w-full h-48 object-cover rounded mb-4">
+            
+           <div class="blog-content text-gray-600">
+                <img src="https://cdn.pixabay.com/photo/2019/03/21/09/42/air-4070641_1280.jpg" alt="Commercial Air Conditioning Featured Image" class="w-full h-screen object-cover rounded-none mb-0">
+<br>
                 <p>Commercial air cooling located in Melbourne does not have to be only about comfort. It's an asset that can be strategically used to improve efficiency of operations, employee productivity as well as customer satisfaction. For Melbourne businesses that have to contend with unpredictable conditions, rising costs for energy and stringent compliance requirements Modern HVAC solutions provide 30 to 50 percent cost savings on energy, proactive maintenance technologies to avoid costly breakdowns, as well as intelligent climate control designed specifically for commercial, hospitality industrial, or other spaces. The evolution of air conditioning transforms it from a cost for utility into an advantage in Melbourne's vast commercial environment.</p>
 
                 <h3 class="text-xl font-semibold">Why Melbourne's Climate Makes Smart AC Non-Negotiable</h3>
@@ -104,7 +96,14 @@
                     <li><strong>Summer peak:</strong> Heatwaves (like Jan 2024's temperatures of 40 degrees Celsius or more) test the limits of capacity which could lead to business shutdowns.</li>
                     <li><strong>Humidity fights:</strong> Coastal moisture breeds mould in ducts, which can compromise the quality of air.</li>
                 </ul>
-                <p>A <a href="https://www.maroondahair.com.au/air-conditioning/commercial-air-conditioning/"><strong>trustworthy commercial air conditioning system in Melbourne</strong></a> serves as your first line of defense to prevent revenue loss due to unsatisfied customers or stopped production.</p>
+                <p>
+  A 
+  <a href="https://www.maroondahair.com.au/air-conditioning/commercial-air-conditioning/" style="color: blue;">
+    <strong>trustworthy commercial air conditioning system in Melbourne</strong>
+  </a> 
+  serves as your first line of defense to prevent revenue loss due to unsatisfied customers or stopped production.
+</p>
+
 
                 <h3 class="text-xl font-semibold">Decoding Your Commercial AC Options: What Fits Your Melbourne Business?</h3>
                 <h4 class="text-lg font-semibold">1. Split Systems: Flexible & Cost-Effective</h4>
@@ -231,7 +230,14 @@
                 <p><strong>Q: Do I qualify for tax deductions on AC upgrade?</strong></p>
                 <p>A: Yes! Instant asset write-off programs can be used for improvements in efficiency that are less than $150k.</p>
                 <p><strong>Q: What is the reason my system gets frozen in Melbourne's humid cold?</strong></p>
-                <p>A: A low refrigerant level or blocked filters can result in the icing. Switch off the unit and call an <a href="https://www.maroondahair.com.au/"><strong>24 hour commercial AC repair Melbourne</strong></a> specialist.</p>
+                <p>
+  A: A low refrigerant level or blocked filters can result in the icing. Switch off the unit and call an 
+  <a href="https://www.maroondahair.com.au/" style="color: blue;">
+    <strong>24 hour commercial AC repair Melbourne</strong>
+  </a> 
+  specialist.
+</p>
+
 
                 <h3 class="text-xl font-semibold">Breathe Easy: The Final Word Melbourne's HVAC Evolution</h3>
                 <p>Air conditioning for commercial buildings in Melbourne has transformed into an intelligent, strategic investment. Beyond controlling temperature it affects your bottom line via savings on energy, compliance and customer retention. By partnering with experts in your local area that are certified, it will ensure that your system is able to provide year-round stability, keeping your staff happy and your customers content whatever Melbourne's weather is throwing at you.</p>
@@ -241,9 +247,46 @@
         </div>
     </section>
 
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-blue-900 text-white py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Contact Us</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start">
+                <div class="md:w-1/2 mb-6 md:mb-0">
+                    <h3 class="text-xl font-semibold mb-4 text-justify">Visit Our Showroom</h3>
+                    <p class="text-justify mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
+                    <p class="text-justify mb-2"><strong>Trading Hours:</strong></p>
+                    <p class="text-justify">Monday - Friday 9:00 am - 5:00 pm</p>
+                    <h3 class="text-xl font-semibold mt-6 mb-4 text-justify">Contact Information</h3>
+                    <p class="text-justify mb-2">PO Box 1240, Croydon, Vic 3136</p>
+                    <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
+                </div>
+                <form action="https://formsubmit.co/Sales@maroondahair.com.au" method="POST" class="md:w-1/2 md:ml-8">
+    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+    <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+    <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+    <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
+    
+    <!-- Optional hidden fields -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+</form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-6">
+            <div class="flex justify-center mb-8">
+                <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12">
+            </div>
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">About Us</h4>
@@ -252,18 +295,17 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">Services</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="index.html#services" class="hover:text-blue-300">Residential Heating</a></li>
-                        <li class="text-justify"><a href="index.html#services" class="hover:text-blue-300">Commercial Cooling</a></li>
-                        <li class="text-justify"><a href="index.html#services" class="hover:text-blue-300">Maintenance Plans</a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Residential Heating</strong></a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Commercial Cooling</strong></a></li>
+                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Maintenance Plans</strong></a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-justify">Quick Links</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="index.html#home" class="hover:text-blue-300">Home</a></li>
-                        <li class="text-justify"><a href="index.html#about" class="hover:text-blue-300">About</a></li>
-                        <li class="text-justify"><a href="blog.html" class="hover:text-blue-300">Blog</a></li>
-                        <li class="text-justify"><a href="index.html#contact" class="hover:text-blue-300">Contact</a></li>
+                        <li class="text-justify"><a href="#home" class="hover:text-blue-300"><strong>Home</strong></a></li>
+                        <li class="text-justify"><a href="#about" class="hover:text-blue-300"><strong>About</strong></a></li>
+                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300"><strong>Contact</strong></a></li>
                     </ul>
                 </div>
                 <div>
