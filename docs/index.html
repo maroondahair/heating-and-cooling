@@ -1,4 +1,94 @@
-<script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heating and Cooling</title>
+    <link rel="icon" type="image/png" href="https://maroondahair.github.io/heating-and-cooling/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a; /* Dark slate background */
+            color: #e2e8f0;
+        }
+        .text-justify { text-align: justify; }
+        #blog-section { padding: 2rem; }
+        .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #1e40af, #3b82f6); /* Gradient glow */
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #60a5fa; /* Blue accent */
+            transition: width 0.3s ease;
+        }
+        .hero-text {
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .blog-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #1e40af, #60a5fa);
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
@@ -11,23 +101,15 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
                 );
-                // Fallback
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                 return csv;
             } catch (e) {
@@ -37,57 +119,17 @@
         }
         return gk_fileData[filename] || "";
         }
-</script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heating and Cooling</title>
-    <link rel="icon" type="image/png" href="https://maroondahair.github.io/heating-and-cooling/favicon-32x32.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body { font-family: 'Arial', sans-serif; }
-        .text-justify { text-align: justify; }
-        #blog-section { padding: 1rem; }
-        .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
-        .scroll-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1e3a8a; /* Matches bg-blue-900 */
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        .scroll-to-top.visible {
-            opacity: 0.7;
-            visibility: visible;
-        }
-        .scroll-to-top:hover {
-            opacity: 1;
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
+    </script>
+
     <!-- Header -->
-    <header class="bg-blue-900 text-white sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <div class="text-2xl font-bold mr-4">Heating and Cooling&nbsp;&nbsp;</div>
-            <nav class="flex items-center space-x-6">
-                <a href="https://maroondahair.github.io/heating-and-cooling/" class="hover:text-blue-300">Home</a>
-                <a href="#services" class="hover:text-blue-300">Services</a>
-                <a href="#about" class="hover:text-blue-300">About</a>
-                <a href="#contact" class="hover:text-blue-300">Contact</a>
+            <div class="text-3xl font-bold mr-4" style="font-family: 'Montserrat', sans-serif;">Heating and Cooling</div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="https://maroondahair.github.io/heating-and-cooling/" class="nav-link hover:text-blue-400">Home</a>
+                <a href="#services" class="nav-link hover:text-blue-400">Services</a>
+                <a href="#about" class="nav-link hover:text-blue-400">About</a>
+                <a href="#contact" class="nav-link hover:text-blue-400">Contact</a>
             </nav>
             <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12 mx-auto">
             <button class="md:hidden" onclick="toggleMenu()">
@@ -95,71 +137,68 @@
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden bg-blue-800 text-white flex flex-col items-center space-y-4 py-4">
-            <a href="#home" class="hover:text-blue-300">Home</a>
-            <a href="#services" class="hover:text-blue-300">Services</a>
-            <a href="#about" class="hover:text-blue-300">About</a>
-            <a href="#contact" class="hover:text-blue-300">Contact</a>
+        <div id="mobileMenu" class="hidden bg-indigo-800 text-white flex flex-col items-center space-y-4 py-4">
+            <a href="#home" class="hover:text-blue-400">Home</a>
+            <a href="#services" class="hover:text-blue-400">Services</a>
+            <a href="#about" class="hover:text-blue-400">About</a>
+            <a href="#contact" class="hover:text-blue-400">Contact</a>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-cover bg-center h-screen flex items-center text-white" style="background-image: url('https://images.pexels.com/photos/7061339/pexels-photo-7061339.jpeg')">
-        <div class="container mx-auto text-center px-6">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-black">
-                    Expert Heating and Cooling Solutions
-                </h1>
-                <p class="text-lg md:text-xl mb-6 text-black">
-                    <span class="inline bg-white/70 px-1">
-                        Providing top-tier HVAC services for residential and commercial properties in Melbourne.
-                    </span>
-                </p>
-            </div>
-            <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded"><strong>Get a Quote</strong></a>
+    <section id="home" class="bg-cover bg-center h-screen flex items-center text-white relative" style="background-image: url('https://images.pexels.com/photos/7061339/pexels-photo-7061339.jpeg')">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-blue-900/70"></div>
+        <div class="container mx-auto text-center px-6 relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 hero-text" style="font-family: 'Montserrat', sans-serif;">
+                Unleash Comfort with Expert HVAC Solutions
+            </h1>
+            <p class="text-xl md:text-2xl mb-6 hero-text">
+                <span class="inline bg-black/50 px-2 py-1 rounded">Transforming Melbourne’s homes and businesses with cutting-edge heating and cooling.</span>
+            </p>
+            <a href="#contact" class="cta-button bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg">Get a Quote Now</a>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16">
+    <section id="services" class="py-20 bg-gray-800">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Our Services</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" style="font-family: 'Montserrat', sans-serif;">Our Services</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Residential Heating -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg">
                     <img src="https://images.pexels.com/photos/20046692/pexels-photo-20046692.jpeg" alt="Residential Heating AC" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-semibold mb-2 text-justify">Residential Heating</h3>
-                    <p class="text-gray-600 text-justify">Stay warm with our efficient heating systems designed for homes. We offer installation, maintenance, and repair services.</p>
+                    <h3 class="text-2xl font-semibold mb-2" style="font-family: 'Montserrat', sans-serif;">Residential Heating</h3>
+                    <p class="text-gray-300">Stay cozy with our state-of-the-art heating systems, tailored for your home’s comfort.</p>
                 </div>
                 <!-- Commercial Cooling -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg">
                     <img src="https://cdn.pixabay.com/photo/2024/06/21/08/05/air-conditioner-8843842_1280.png" alt="Commercial Cooling AC" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-semibold mb-2 text-justify">Commercial Cooling</h3>
-                    <p class="text-gray-600 text-justify">Advanced air conditioning solutions for businesses, ensuring comfort and compliance with Melbourne's regulations.</p>
+                    <h3 class="text-2xl font-semibold mb-2" style="font-family: 'Montserrat', sans-serif;">Commercial Cooling</h3>
+                    <p class="text-gray-300">Cool your business with advanced HVAC solutions built for efficiency and compliance.</p>
                 </div>
                 <!-- Maintenance Plans -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="service-card bg-gray-900 p-6 rounded-lg shadow-lg">
                     <img src="https://cdn.pixabay.com/photo/2024/06/22/14/47/air-conditioner-8846462_1280.png" alt="Maintenance Plans AC" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-semibold mb-2 text-justify">Maintenance Plans</h3>
-                    <p class="text-gray-600 text-justify">Prevent costly breakdowns with our proactive maintenance programs tailored for your HVAC systems.</p>
+                    <h3 class="text-2xl font-semibold mb-2" style="font-family: 'Montserrat', sans-serif;">Maintenance Plans</h3>
+                    <p class="text-gray-300">Keep your systems running smoothly with our proactive maintenance programs.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="bg-gray-200 py-16">
+    <section id="about" class="bg-gray-900 py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12 text-justify">About Us</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" style="font-family: 'Montserrat', sans-serif;">About Us</h2>
             <div class="flex flex-col md:flex-row items-center">
                 <img src="https://plus.unsplash.com/premium_photo-1682126012378-859ca7a9f4cf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Air Conditioning Service" class="w-full md:w-1/2 h-64 object-cover rounded mb-6 md:mb-0 md:mr-6">
                 <div class="md:w-1/2">
                     <img src="https://plus.unsplash.com/premium_photo-1683134512538-7b390d0adc9e?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="About Us Team" class="w-1/2 h-32 object-cover rounded mb-4 float-left mr-4">
-                    <p class="text-gray-600 mb-4 text-justify">Maroondah Heating and Cooling, a family-run business with 20+ years of experience, was founded to meet the demand for expert heating and cooling installations backed by strong plumbing expertise.</p>
-                    <p class="text-gray-600 text-justify">Based in Melbourne, they proudly serve areas like Bayswater, Ringwood, Croydon, and beyond.</p>
-                    <p>
-                        <strong>Visit the official website:</strong> 
-                        <a href="https://www.maroondahair.com.au/" target="_blank" style="color: blue;">maroondahair.com.au</a>
+                    <p class="text-gray-300 mb-4">Maroondah Heating and Cooling, a family-run legacy with over 20 years of expertise, delivers unparalleled HVAC and plumbing solutions.</p>
+                    <p class="text-gray-300">Proudly serving Melbourne’s Bayswater, Ringwood, Croydon, and beyond with innovation and care.</p>
+                    <p class="mt-4">
+                        <strong>Explore more:</strong> 
+                        <a href="https://www.maroondahair.com.au/" target="_blank" class="text-blue-400 hover:underline">maroondahair.com.au</a>
                     </p>
                 </div>
             </div>
@@ -167,87 +206,86 @@
     </section>
 
     <!-- Blog Post Section -->
-    <section id="blog-post-1" class="py-16">
+    <section id="blog-post-1" class="py-20 bg-gray-800">
         <div class="container mx-auto px-6">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Our Blog</h1>
+            <h1 class="text-5xl font-bold text-center mb-12" style="font-family: 'Montserrat', sans-serif;">Our Blog</h1>
             <div class="flex flex-col items-center">
-                <div class="w-80 h-80 overflow-hidden rounded-lg mb-4">
+                <div class="blog-card w-80 h-80 overflow-hidden rounded-lg mb-6 shadow-lg">
                     <img src="https://maroondahair.github.io/heating-and-cooling/Commercial%20Air%20Conditioning%20Melbourne%203.jpg" alt="Commercial Air Conditioning Featured Image" class="w-full h-full object-cover">
                 </div>
-                <h1 class="text-2xl font-bold mb-2 text-center">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
-                <p class="text-gray-600 mb-4 text-center">Commercial air conditioning in Melbourne is a strategic asset, improving efficiency, productivity, and customer satisfaction with modern HVAC solutions.</p>
-                <a href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne" class="text-blue-600 hover:underline">Read More</a>
+                <h1 class="text-3xl font-bold mb-2 text-center" style="font-family: 'Montserrat', sans-serif;">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
+                <p class="text-gray-300 mb-4 text-center">Elevate your business with cutting-edge HVAC solutions designed for efficiency and comfort.</p>
+                <a href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne" class="text-blue-400 hover:underline">Read More</a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="bg-blue-900 text-white py-16">
+    <section id="contact" class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Contact Us</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" style="font-family: 'Montserrat', sans-serif;">Contact Us</h2>
             <div class="flex flex-col md:flex-row justify-between items-start">
                 <div class="md:w-1/2 mb-6 md:mb-0">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Visit Our Showroom</h3>
-                    <p class="text-justify mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
-                    <p class="text-justify mb-2"><strong>Trading Hours:</strong></p>
-                    <p class="text-justify">Monday - Friday 9:00 am - 5:00 pm</p>
-                    <h3 class="text-xl font-semibold mt-6 mb-4 text-justify">Contact Information</h3>
-                    <p class="text-justify mb-2">PO Box 1240, Croydon, Vic 3136</p>
-                    <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
+                    <h3 class="text-2xl font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Visit Our Showroom</h3>
+                    <p class="mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
+                    <p class="mb-2"><strong>Trading Hours:</strong></p>
+                    <p>Monday - Friday 9:00 am - 5:00 pm</p>
+                    <h3 class="text-2xl font-semibold mt-6 mb-4" style="font-family: 'Montserrat', sans-serif;">Contact Information</h3>
+                    <p class="mb-2">PO Box 1240, Croydon, Vic 3136</p>
+                    <p class="mb-2">Email: Sales@maroondahair.com.au</p>
                 </div>
                 <form action="https://formsubmit.co/Sales@maroondahair.com.au" method="POST" class="md:w-1/2 md:ml-8">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+                    <h3 class="text-2xl font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Send a Message</h3>
                     <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
                     <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
                     <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
-                    <!-- Optional hidden fields -->
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                    <button type="submit" class="cta-button bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg">Submit</button>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
+    <footer class="bg-gray-900 text-white py-10">
         <div class="container mx-auto px-6">
             <div class="flex justify-center mb-8">
                 <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12">
             </div>
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">About Us</h4>
-                    <p class="text-gray-400 text-justify">Melbourne's leading HVAC provider, offering reliable heating and cooling solutions for homes and businesses.</p>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">About Us</h4>
+                    <p class="text-gray-400">Melbourne’s premier HVAC provider, delivering innovative heating and cooling solutions.</p>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Services</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Services</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Residential Heating</strong></a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Commercial Cooling</strong></a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Maintenance Plans</strong></a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Residential Heating</a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Commercial Cooling</a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Maintenance Plans</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Quick Links</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Quick Links</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#home" class="hover:text-blue-300"><strong>Home</strong></a></li>
-                        <li class="text-justify"><a href="#about" class="hover:text-blue-300"><strong>About</strong></a></li>
-                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300"><strong>Contact</strong></a></li>
+                        <li><a href="#home" class="hover:text-blue-400">Home</a></li>
+                        <li><a href="#about" class="hover:text-blue-400">About</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Follow Us</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="mt-8 text-center text-gray-400 text-justify">
+            <div class="mt-8 text-center text-gray-400">
                 <p>&copy; 2025 Heating and Cooling. All rights reserved.</p>
             </div>
         </div>
@@ -262,7 +300,6 @@
             menu.classList.toggle('hidden');
         }
 
-        // Show/hide scroll-to-top button based on scroll position
         window.addEventListener('scroll', function() {
             const scrollToTop = document.querySelector('.scroll-to-top');
             const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
