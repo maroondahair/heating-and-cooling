@@ -37,13 +37,14 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heating and Cooling</title>
-        <link rel="icon" type="image/png" href="https://maroondahair.github.io/heating-and-cooling/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="https://maroondahair.github.io/heating-and-cooling/favicon-32x32.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -51,6 +52,25 @@
         .text-justify { text-align: justify; }
         #blog-section { padding: 1rem; }
         .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1e3a8a; /* Matches bg-blue-900 */
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .scroll-to-top:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -58,12 +78,12 @@
     <header class="bg-blue-900 text-white sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <div class="text-2xl font-bold mr-4">Heating and Cooling&nbsp;&nbsp;</div>
-           <nav class="flex items-center space-x-6">
-  <a href="https://maroondahair.github.io/heating-and-cooling/" class="hover:text-blue-300">Home</a>
-  <a href="#services" class="hover:text-blue-300">Services</a>
-  <a href="#about" class="hover:text-blue-300">About</a>
-  <a href="#contact" class="hover:text-blue-300">Contact</a>
-</nav>
+            <nav class="flex items-center space-x-6">
+                <a href="https://maroondahair.github.io/heating-and-cooling/" class="hover:text-blue-300">Home</a>
+                <a href="#services" class="hover:text-blue-300">Services</a>
+                <a href="#about" class="hover:text-blue-300">About</a>
+                <a href="#contact" class="hover:text-blue-300">Contact</a>
+            </nav>
             <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12 mx-auto">
             <button class="md:hidden" onclick="toggleMenu()">
                 <i class="fas fa-bars text-2xl"></i>
@@ -82,18 +102,15 @@
     <section id="home" class="bg-cover bg-center h-screen flex items-center text-white" style="background-image: url('https://images.pexels.com/photos/7061339/pexels-photo-7061339.jpeg')">
         <div class="container mx-auto text-center px-6">
             <div class="text-center">
-  <h1 class="text-4xl md:text-6xl font-bold mb-4 text-black">
-    Expert Heating and Cooling Solutions
-  </h1>
-  <p class="text-lg md:text-xl mb-6 text-black">
-    <span class="inline bg-white/70 px-1">
-      Providing top-tier HVAC services for residential and commercial properties in Melbourne.
-    </span>
-  </p>
-</div>
-
-
-
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-black">
+                    Expert Heating and Cooling Solutions
+                </h1>
+                <p class="text-lg md:text-xl mb-6 text-black">
+                    <span class="inline bg-white/70 px-1">
+                        Providing top-tier HVAC services for residential and commercial properties in Melbourne.
+                    </span>
+                </p>
+            </div>
             <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded"><strong>Get a Quote</strong></a>
         </div>
     </section>
@@ -134,35 +151,30 @@
                 <div class="md:w-1/2">
                     <img src="https://plus.unsplash.com/premium_photo-1683134512538-7b390d0adc9e?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="About Us Team" class="w-1/2 h-32 object-cover rounded mb-4 float-left mr-4">
                     <p class="text-gray-600 mb-4 text-justify">Maroondah Heating and Cooling, a family-run business with 20+ years of experience, was founded to meet the demand for expert heating and cooling installations backed by strong plumbing expertise.</p>
-                    <p class="text-gray-600 text-justify">Based in Melbourne, they proudly serve areas like Bayswater, Ringwood, Croydon, and beyond.</p> <p>
-  <strong>Visit the official website:</strong> 
-  <a href="https://www.maroondahair.com.au/" target="_blank" style="color: blue;">maroondahair.com.au</a>
-</p>
+                    <p class="text-gray-600 text-justify">Based in Melbourne, they proudly serve areas like Bayswater, Ringwood, Croydon, and beyond.</p>
+                    <p>
+                        <strong>Visit the official website:</strong> 
+                        <a href="https://www.maroondahair.com.au/" target="_blank" style="color: blue;">maroondahair.com.au</a>
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Blog Post Section -->
-<section id="blog-post-1" class="py-16">
-    <div class="container mx-auto px-6">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Our Blog</h1>
-
-        <div class="flex flex-col items-center">
-           
+    <section id="blog-post-1" class="py-16">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Our Blog</h1>
+            <div class="flex flex-col items-center">
                 <div class="w-80 h-80 overflow-hidden rounded-lg mb-4">
                     <img src="https://maroondahair.github.io/heating-and-cooling/Commercial%20Air%20Conditioning%20Melbourne%203.jpg" alt="Commercial Air Conditioning Featured Image" class="w-full h-full object-cover">
                 </div>
-            </a>
-
                 <h1 class="text-2xl font-bold mb-2 text-center">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
-            </a>
-            <p class="text-gray-600 mb-4 text-center">Commercial air conditioning in Melbourne is a strategic asset, improving efficiency, productivity, and customer satisfaction with modern HVAC solutions.</p>
-            <a href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne" class="text-blue-600 hover:underline">Read More</a>
+                <p class="text-gray-600 mb-4 text-center">Commercial air conditioning in Melbourne is a strategic asset, improving efficiency, productivity, and customer satisfaction with modern HVAC solutions.</p>
+                <a href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne" class="text-blue-600 hover:underline">Read More</a>
+            </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="bg-blue-900 text-white py-16">
@@ -179,20 +191,16 @@
                     <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
                 </div>
                 <form action="https://formsubmit.co/Sales@maroondahair.com.au" method="POST" class="md:w-1/2 md:ml-8">
-    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
-    <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
-    <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
-    <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
-    
-    <!-- Optional hidden fields -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
-
-    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
-</form>
-
-                </div>
+                    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+                    <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+                    <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+                    <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
+                    <!-- Optional hidden fields -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+                </form>
             </div>
         </div>
     </section>
@@ -238,6 +246,9 @@
                 <p>&copy; 2025 Heating and Cooling. All rights reserved.</p>
             </div>
         </div>
+        <a href="#home" class="scroll-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </a>
     </footer>
 
     <script>
