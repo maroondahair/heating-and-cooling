@@ -1,43 +1,3 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,30 +15,39 @@
     <link rel="icon" type="image/png" href="https://maroondahair.github.io/heating-and-cooling/favicon-32x32.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a; /* Dark slate background */
+            color: #e2e8f0;
+        }
         .text-justify { text-align: justify; }
-        #blog-post-1 { padding: 1rem; }
+        #blog-post-1 { padding: 2rem; }
         .blog-content p, .blog-content h3, .blog-content h4, .blog-content ul, .blog-content ol, .blog-content table { margin-bottom: 1.5rem; text-align: justify; }
         .blog-content img {
-            border-radius: 15px; /* Adds curved corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             width: 800px;
-            height: 515px; /* Fixed size for featured image */
+            height: 515px;
             object-fit: cover;
-            margin-bottom: 2rem; /* Increased margin for spacing */
+            margin-bottom: 2rem;
             display: block;
             margin-left: auto;
-            margin-right: auto; /* Centers the image */
+            margin-right: auto;
+            transition: transform 0.3s ease;
+        }
+        .blog-content img:hover {
+            transform: scale(1.05);
         }
         .scroll-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1e3a8a; /* Matches bg-blue-900 */
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #1e40af, #3b82f6);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -86,27 +55,109 @@
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
         .scroll-to-top.visible {
-            opacity: 0.7;
+            opacity: 1;
             visibility: visible;
         }
         .scroll-to-top:hover {
-            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #60a5fa;
+            transition: width 0.3s ease;
+        }
+        .blog-content {
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #1e40af, #60a5fa);
+        }
+        .blog-content a {
+            color: #60a5fa;
+            transition: color 0.3s ease;
+        }
+        .blog-content a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        table {
+            background-color: #1e293b;
+            color: #e2e8f0;
+        }
+        th, td {
+            border-color: #4b5563;
+        }
+        th {
+            background-color: #374151;
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
+    <script type="text/javascript">
+        // Handles XLSX file processing and converts to CSV, filtering out blank rows
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+    </script>
+
     <!-- Header -->
-    <header class="bg-blue-900 text-white sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <div class="text-2xl font-bold mr-4">Heating and Cooling&nbsp;&nbsp;</div>
-            <nav class="flex items-center space-x-6">
-                <a href="https://maroondahair.github.io/heating-and-cooling/" class="hover:text-blue-300">Home</a>
-                <a href="#services" class="hover:text-blue-300">Services</a>
-                <a href="#about" class="hover:text-blue-300">About</a>
-                <a href="#contact" class="hover:text-blue-300">Contact</a>
+            <div class="text-3xl font-bold mr-4" style="font-family: 'Montserrat', sans-serif;">Heating and Cooling</div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="https://maroondahair.github.io/heating-and-cooling/" class="nav-link hover:text-blue-400">Home</a>
+                <a href="#services" class="nav-link hover:text-blue-400">Services</a>
+                <a href="#about" class="nav-link hover:text-blue-400">About</a>
+                <a href="#contact" class="nav-link hover:text-blue-400">Contact</a>
             </nav>
             <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12 mx-auto">
             <button class="md:hidden" onclick="toggleMenu()">
@@ -114,65 +165,58 @@
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden bg-blue-800 text-white flex flex-col items-center space-y-4 py-4">
-            <a href="#home" class="hover:text-blue-300">Home</a>
-            <a href="#services" class="hover:text-blue-300">Services</a>
-            <a href="#about" class="hover:text-blue-300">About</a>
-            <a href="#contact" class="hover:text-blue-300">Contact</a>
+        <div id="mobileMenu" class="hidden bg-indigo-800 text-white flex flex-col items-center space-y-4 py-4">
+            <a href="#home" class="hover:text-blue-400">Home</a>
+            <a href="#services" class="hover:text-blue-400">Services</a>
+            <a href="#about" class="hover:text-blue-400">About</a>
+            <a href="#contact" class="hover:text-blue-400">Contact</a>
         </div>
     </header>
 
     <!-- Blog Post Section -->
-    <section id="blog-post-1" class="py-16">
+    <section id="blog-post-1" class="py-20 bg-gray-800">
         <div class="container mx-auto px-6">
-            <h1 class="text-3xl font-bold mb-6 text-justify">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
-            <div class="text-gray-600 mb-6">
+            <h1 class="text-4xl font-bold mb-6 text-justify" style="font-family: 'Montserrat', sans-serif;">Commercial Air Conditioning Melbourne: Smarter Solutions for Businesses</h1>
+            <div class="text-gray-300 mb-6">
                 <p><strong>Date Published:</strong> 4/08/2025</p>
                 <strong>Tags:</strong>&nbsp;
-                <a style="color: blue;" href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne">commercial air conditioning melbourne</a>, 
-                <a style="color: blue;" href="https://maroondahair.github.io/heating-and-cooling/ducted-heating-and-cooling-melbourne">ducted heating and cooling melbourne</a>
+                <a href="https://maroondahair.github.io/heating-and-cooling/commercial-air-conditioning-melbourne">commercial air conditioning melbourne</a>, 
+                <a href="https://maroondahair.github.io/heating-and-cooling/ducted-heating-and-cooling-melbourne">ducted heating and cooling melbourne</a>
                 <br><br>
-                <div class="blog-content text-gray-600">
+                <div class="blog-content">
                     <img src="https://maroondahair.github.io/heating-and-cooling/Commercial%20Air%20Conditioning%20Melbourne%203.jpg" alt="Commercial Air Conditioning Featured Image" />
-                    <br>
                     <p>Commercial air cooling located in Melbourne does not have to be only about comfort. It's an asset that can be strategically used to improve efficiency of operations, employee productivity as well as customer satisfaction. For Melbourne businesses that have to contend with unpredictable conditions, rising costs for energy and stringent compliance requirements Modern HVAC solutions provide 30 to 50 percent cost savings on energy, proactive maintenance technologies to avoid costly breakdowns, as well as intelligent climate control designed specifically for commercial, hospitality industrial, or other spaces. The evolution of air conditioning transforms it from a cost for utility into an advantage in Melbourne's vast commercial environment.</p>
-                    <h3 class="text-xl font-semibold">Why Melbourne's Climate Makes Smart AC Non-Negotiable</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Why Melbourne's Climate Makes Smart AC Non-Negotiable</h3>
                     <p>Melbourne's famous "four seasons in a day" presents unique HVAC challenges:</p>
                     <ul class="list-disc pl-6">
                         <li><strong>Temperature fluctuations:</strong> Sudden 15°C+ shifts strain traditional systems, increasing energy consumption.</li>
                         <li><strong>Summer peak:</strong> Heatwaves (like Jan 2024's temperatures of 40 degrees Celsius or more) test the limits of capacity which could lead to business shutdowns.</li>
                         <li><strong>Humidity fights:</strong> Coastal moisture breeds mould in ducts, which can compromise the quality of air.</li>
                     </ul>
-                    <p>
-                        A 
-                        <a href="https://www.maroondahair.com.au/air-conditioning/commercial-air-conditioning/" style="color: blue;">
-                            <strong>trustworthy commercial air conditioning system in Melbourne</strong>
-                        </a> 
-                        serves as your first line of defense to prevent revenue loss due to unsatisfied customers or stopped production.
-                    </p>
-                    <h3 class="text-xl font-semibold">Decoding Your Commercial AC Options: What Fits Your Melbourne Business?</h3>
-                    <h4 class="text-lg font-semibold">1. Split Systems: Flexible & Cost-Effective</h4>
+                    <p>A <a href="https://www.maroondahair.com.au/air-conditioning/commercial-air-conditioning/"><strong>trustworthy commercial air conditioning system in Melbourne</strong></a> serves as your first line of defense to prevent revenue loss due to unsatisfied customers or stopped production.</p>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Decoding Your Commercial AC Options: What Fits Your Melbourne Business?</h3>
+                    <h4 class="text-xl font-semibold" style="font-family: 'Montserrat', sans-serif;">1. Split Systems: Flexible & Cost-Effective</h4>
                     <ul class="list-disc pl-6">
                         <li><strong>Ideal For:</strong> small offices, cafés and retail shops (under 150 square meters)</li>
                         <li><strong>Advantages:</strong> Low initial cost, Zoned cooling (e.g. kitchen vs. dining room)</li>
                         <li><strong>Cons:</strong> Limited reach; several units required to cover large areas.</li>
                     </ul>
                     <p><em>Melbourne Analysis:</em> Ideal for Fitzroy boutiques or Southbank cafes that need specific cooling.</p>
-                    <h4 class="text-lg font-semibold">2. Ducted Systems: Seamless & Powerful</h4>
+                    <h4 class="text-xl font-semibold" style="font-family: 'Montserrat', sans-serif;">2. Ducted Systems: Seamless & Powerful</h4>
                     <ul class="list-disc pl-6">
                         <li><strong>Ideal for:</strong> large offices, restaurants, clinics</li>
                         <li><strong>Pros:</strong> Whole-building coverage, hidden vents, superior airflow</li>
                         <li><strong>Cons:</strong> Higher installation complexity, Ceiling space needed</li>
                     </ul>
                     <p><em>Case Study:</em> A Chapel Street restaurant reduced complaints by 70 percentage after moving to zoned air conditioning ducts <strong>commercial air cooling within Melbourne</strong>.</p>
-                    <h4 class="text-lg font-semibold">3. VRV/VRF Tech: Precision & Efficiency</h4>
+                    <h4 class="text-xl font-semibold" style="font-family: 'Montserrat', sans-serif;">3. VRV/VRF Tech: Precision & Efficiency</h4>
                     <ul class="list-disc pl-6">
                         <li><strong>Best choice For:</strong> Buildings with multiple floors, hotels, corporate headquarters</li>
                         <li><strong>Pros:</strong> Simultaneous heating/cooling in different zones, 40%+ energy savings</li>
                         <li><strong>Cons:</strong> Premium upfront investment</li>
                     </ul>
                     <p><em>Local Example:</em> Docklands offices use VRFs to control sun-exposed and interior spaces in a separate manner.</p>
-                    <h3 class="text-xl font-semibold">The Hidden Costs of Neglect: Why Reactive Repairs Cost More</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">The Hidden Costs of Neglect: Why Reactive Repairs Cost More</h3>
                     <p>Inadequate maintenance of your <strong>Melbourne commercial AC system</strong> could lead to a catastrophe:</p>
                     <ul class="list-disc pl-6">
                         <li><strong>Downtime:</strong> Repairs that take 48 hours during heatwaves = loss of sales</li>
@@ -180,7 +224,7 @@
                         <li><strong>Energy wasted:</strong> Blockages in the coils cause power consumption to increase by 20-30 percent</li>
                     </ul>
                     <p><em>Pro Tip:</em> Sign a <strong>preventative maintenance program Melbourne</strong> through local service providers. If you pay less than $500 per year that means you can avoid $5k or more emergency calls.</p>
-                    <h3 class="text-xl font-semibold">Energy Efficiency Upgrades: Slash Bills, Earn Rebates</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Energy Efficiency Upgrades: Slash Bills, Earn Rebates</h3>
                     <p>Melbourne companies can benefit from:</p>
                     <ul class="list-disc pl-6">
                         <li><strong>Victorian Energy Upgrades (VEU):</strong> Rebates for the installation of high-efficiency inverters, or smart thermostats</li>
@@ -188,14 +232,14 @@
                         <li><strong>AI Optimisation:</strong> Sensors recognize patterns of occupancy to reduce the amount of cooling that is used up</li>
                     </ul>
                     <p><em>Real Savings:</em> A Footscray warehouse reduced the cost of cooling by 52% after upgrading to an energy efficient commercial air conditioning Melbourne system.</p>
-                    <h3 class="text-xl font-semibold">Compliance & Health: Navigating Melbourne's Regulations</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Compliance & Health: Navigating Melbourne's Regulations</h3>
                     <ul class="list-disc pl-6">
                         <li><strong>Building Code (NCC):</strong> Mandates airflow rates (e.g. 10L/s for each office worker)</li>
                         <li><strong>SafeWork Victoria:</strong> Requires temperatures of less than 26 degrees Celsius indoors during heat alerts</li>
                         <li><strong>Health Act:</strong> Requires quarterly duct cleaning for food businesses</li>
                     </ul>
                     <p>Affable <strong>commercial air conditioner contractors Melbourne</strong> manage the council's permits and compliance papers.</p>
-                    <h3 class="text-xl font-semibold">Choosing Your Melbourne HVAC Partner: 7 Critical Questions</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Choosing Your Melbourne HVAC Partner: 7 Critical Questions</h3>
                     <ol class="list-decimal pl-6">
                         <li><strong>Are you ARCtick certified?</strong> (Non-negotiable for handling refrigerants)</li>
                         <li><strong>Do you have specific local sources?</strong> (Check similar projects in Richmond, CBD, etc.)</li>
@@ -205,17 +249,17 @@
                         <li><strong>Do you have the ability to integrate to BMS Systems?</strong> (For smart building synergy)</li>
                         <li><strong>Do you provide comprehensive report on efficiency?</strong> (Track ROI post-install)</li>
                     </ol>
-                    <h3 class="text-xl font-semibold">Future-Proofing: Melbourne's Smart AC Revolution</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Future-Proofing: Melbourne's Smart AC Revolution</h3>
                     <ul class="list-disc pl-6">
                         <li><strong>Hydro-ready systems:</strong> Adapting for gas phase-outs using electric heat pumps</li>
                         <li><strong>IoT sensors:</strong> Continuous monitoring of the air quality inside hospitals and schools.</li>
                         <li><strong>Green Goals:</strong> AC powered by solar AC is now a requirement in new constructions</li>
                     </ul>
                     <p><em>Innovative Spotlight:</em> Melbourne Uni's brand-new campus is equipped with geothermal-powered commercial HVAC systems, reducing emissions by 90%.</p>
-                    <h3 class="text-xl font-semibold">Maintenance Checklist: Keep Your System Running Smoothly</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Maintenance Checklist: Keep Your System Running Smoothly</h3>
                     <table class="table-auto w-full border-collapse border border-gray-300">
                         <thead>
-                            <tr class="bg-gray-100">
+                            <tr>
                                 <th class="border border-gray-300 p-2">Task</th>
                                 <th class="border border-gray-300 p-2">Daily</th>
                                 <th class="border border-gray-300 p-2">Monthly</th>
@@ -249,7 +293,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <h3 class="text-xl font-semibold">Case Study: Transforming a St Kilda Hotel's Climate Control</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Case Study: Transforming a St Kilda Hotel's Climate Control</h3>
                     <p><strong>The Challenge:</strong> 60-room hotel faced 40% drop in occupancy because of noisy, inconsistent temperature. <strong>Solution:</strong> Installed modular VRFs that had silent compressors as well as zone controls.</p>
                     <p><strong>Results:</strong></p>
                     <ul class="list-disc pl-6">
@@ -257,7 +301,7 @@
                         <li>4.8/5 guest comfort scores</li>
                         <li>Revenue recovery of $150k/year</li>
                     </ul>
-                    <h3 class="text-xl font-semibold">FAQs: Melbourne Commercial Air Conditioning Explained</h3>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">FAQs: Melbourne Commercial Air Conditioning Explained</h3>
                     <p><strong>Q: How often should system ducts be checked?</strong></p>
                     <p>A: At least twice per year in the summer and winter peak. Food businesses: quarterly.</p>
                     <p><strong>Q: What size of system does my office of 200m² require?</strong></p>
@@ -265,14 +309,8 @@
                     <p><strong>Q: Do I qualify for tax deductions on AC upgrade?</strong></p>
                     <p>A: Yes! Instant asset write-off programs can be used for improvements in efficiency that are less than $150k.</p>
                     <p><strong>Q: What is the reason my system gets frozen in Melbourne's humid cold?</strong></p>
-                    <p>
-                        A: A low refrigerant level or blocked filters can result in the icing. Switch off the unit and call an 
-                        <a href="https://www.maroondahair.com.au/" style="color: blue;">
-                            <strong>24 hour commercial AC repair Melbourne</strong>
-                        </a> 
-                        specialist.
-                    </p>
-                    <h3 class="text-xl font-semibold">Breathe Easy: The Final Word Melbourne's HVAC Evolution</h3>
+                    <p>A: A low refrigerant level or blocked filters can result in the icing. Switch off the unit and call an <a href="https://www.maroondahair.com.au/"><strong>24 hour commercial AC repair Melbourne</strong></a> specialist.</p>
+                    <h3 class="text-2xl font-semibold" style="font-family: 'Montserrat', sans-serif;">Breathe Easy: The Final Word Melbourne's HVAC Evolution</h3>
                     <p>Air conditioning for commercial buildings in Melbourne has transformed into an intelligent, strategic investment. Beyond controlling temperature it affects your bottom line via savings on energy, compliance and customer retention. By partnering with experts in your local area that are certified, it will ensure that your system is able to provide year-round stability, keeping your staff happy and your customers content whatever Melbourne's weather is throwing at you.</p>
                     <blockquote><em>"In a city where business never sleeps, your air conditioning shouldn't either."</em></blockquote>
                     <p><strong>Next Steps:</strong> Request a free efficiency analysis from Melbourne's most highly-rated HVAC experts. Find out how modern HVAC systems can pay for themselves in two to five years.</p>
@@ -282,72 +320,71 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="bg-blue-900 text-white py-16">
+    <section id="contact" class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12 text-justify">Contact Us</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" style="font-family: 'Montserrat', sans-serif;">Contact Us</h2>
             <div class="flex flex-col md:flex-row justify-between items-start">
                 <div class="md:w-1/2 mb-6 md:mb-0">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Visit Our Showroom</h3>
-                    <p class="text-justify mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
-                    <p class="text-justify mb-2"><strong>Trading Hours:</strong></p>
-                    <p class="text-justify">Monday - Friday 9:00 am - 5:00 pm</p>
-                    <h3 class="text-xl font-semibold mt-6 mb-4 text-justify">Contact Information</h3>
-                    <p class="text-justify mb-2">PO Box 1240, Croydon, Vic 3136</p>
-                    <p class="text-justify mb-2">Email: Sales@maroondahair.com.au</p>
+                    <h3 class="text-2xl font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Visit Our Showroom</h3>
+                    <p class="mb-2">6 Royan Place, Bayswater North, Victoria 3153 (Royan Place is off Colchester Road)</p>
+                    <p class="mb-2"><strong>Trading Hours:</strong></p>
+                    <p>Monday - Friday 9:00 am - 5:00 pm</p>
+                    <h3 class="text-2xl font-semibold mt-6 mb-4" style="font-family: 'Montserrat', sans-serif;">Contact Information</h3>
+                    <p class="mb-2">PO Box 1240, Croydon, Vic 3136</p>
+                    <p class="mb-2">Email: Sales@maroondahair.com.au</p>
                 </div>
                 <form action="https://formsubmit.co/Sales@maroondahair.com.au" method="POST" class="md:w-1/2 md:ml-8">
-                    <h3 class="text-xl font-semibold mb-4 text-justify">Send a Message</h3>
+                    <h3 class="text-2xl font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Send a Message</h3>
                     <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
                     <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700">
                     <textarea name="message" placeholder="Message" required class="w-full p-3 mb-4 rounded bg-gray-800 text-white border border-gray-700 h-32"></textarea>
-                    <!-- Optional hidden fields -->
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- redirect after submit -->
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded">Submit</button>
+                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                    <button type="submit" class="cta-button bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg">Submit</button>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
+    <footer class="bg-gray-900 text-white py-10">
         <div class="container mx-auto px-6">
             <div class="flex justify-center mb-8">
                 <img src="https://www.maroondahair.com.au/wp-content/uploads/2022/01/ft-logo.svg" alt="Logo" class="h-12">
             </div>
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">About Us</h4>
-                    <p class="text-gray-400 text-justify">Melbourne's leading HVAC provider, offering reliable heating and cooling solutions for homes and businesses.</p>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">About Us</h4>
+                    <p class="text-gray-400">Melbourne’s premier HVAC provider, delivering innovative heating and cooling solutions.</p>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Services</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Services</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Residential Heating</strong></a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Commercial Cooling</strong></a></li>
-                        <li class="text-justify"><a href="#services" class="hover:text-blue-300"><strong>Maintenance Plans</strong></a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Residential Heating</a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Commercial Cooling</a></li>
+                        <li><a href="#services" class="hover:text-blue-400">Maintenance Plans</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Quick Links</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Quick Links</h4>
                     <ul class="text-gray-400">
-                        <li class="text-justify"><a href="#home" class="hover:text-blue-300"><strong>Home</strong></a></li>
-                        <li class="text-justify"><a href="#about" class="hover:text-blue-300"><strong>About</strong></a></li>
-                        <li class="text-justify"><a href="#contact" class="hover:text-blue-300"><strong>Contact</strong></a></li>
+                        <li><a href="#home" class="hover:text-blue-400">Home</a></li>
+                        <li><a href="#about" class="hover:text-blue-400">About</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 text-justify">Follow Us</h4>
+                    <h4 class="text-lg font-semibold mb-4" style="font-family: 'Montserrat', sans-serif;">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="mt-8 text-center text-gray-400 text-justify">
+            <div class="mt-8 text-center text-gray-400">
                 <p>&copy; 2025 Heating and Cooling. All rights reserved.</p>
             </div>
         </div>
@@ -362,7 +399,6 @@
             menu.classList.toggle('hidden');
         }
 
-        // Show/hide scroll-to-top button based on scroll position
         window.addEventListener('scroll', function() {
             const scrollToTop = document.querySelector('.scroll-to-top');
             const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
